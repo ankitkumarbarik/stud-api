@@ -15,9 +15,14 @@ import (
 func main() {
 	router := httpapi.NewRouter()
 
+	handler := httpapi.Chain(
+		router,
+		httpapi.LoggingMiddleware,
+	)
+
 	server := http.Server{
 		Addr:    ":5000",
-		Handler: router,
+		Handler: handler,
 	}
 
 	// channel to listen OS signals
